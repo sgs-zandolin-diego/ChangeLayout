@@ -39,6 +39,8 @@ else
 }
 
 @code {
+    [CascadingParameter] public string Titolo { get; set; }
+
     private WeatherForecast[] forecasts;
 
     protected override async Task OnInitializedAsync()
@@ -50,7 +52,7 @@ else
     {
         if (firstRender)
         {
-            impostazioni.AppTitle = "Episodi";
+            Titolo = "fetchdata";
 
             StateHasChanged();
         }
@@ -60,7 +62,7 @@ else
     protected override void OnInitialized()
     {
 
-        impostazioni.AppTitle = "Episodi";
+        Titolo = "fetchdata";
         StateHasChanged();
     }
 }

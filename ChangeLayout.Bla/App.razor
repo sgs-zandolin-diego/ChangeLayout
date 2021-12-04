@@ -1,4 +1,13 @@
-<Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
+
+
+@inject IConfiguration configuration
+        @*AdditionalAssemblies="new[] { typeof(Modulo1.Component1).Assembly,
+                              typeof(Modulo2.Component1).Assembly }">*@
+
+<Router AppAssembly="@typeof(Program).Assembly"
+        PreferExactMatches="@true"
+    AdditionalAssemblies="@ExtraAssemblies" >
+
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
@@ -8,3 +17,27 @@
         </LayoutView>
     </NotFound>
 </Router>
+@code {
+    private static List<Assembly> _extraAssemblies;
+    public List<Assembly> ExtraAssemblies
+    {
+        get
+        {
+            if(_extraAssemblies is null)
+            {
+                _extraAssemblies = new List<Assembly>();
+                List<Data.Modulo> _moduli = new List<Data.Modulo>();
+                configuration.GetSection("moduli").Bind(_moduli);
+                foreach(var modulo in _moduli)
+                {
+                    if (modulo.IsActive)
+                    {
+                        Assembly asm = Assembly.LoadFrom(System.IO.Path.Combine(AppContext.BaseDirectory, modulo.Nome));
+                        _extraAssemblies.Add(asm);
+                    }
+                }
+            }
+            return _extraAssemblies;
+        }
+    }
+}

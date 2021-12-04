@@ -1,8 +1,8 @@
 ﻿@inject Data.ImpostazioniModel impostazioni
 
 <div class="top-row pl-4 navbar navbar-dark">
-@*    <a class="navbar-brand" href="">ChangeLayout.Bla</a>*@
-    <a class="navbar-brand" href="">@impostazioni.AppTitle</a>
+    @*    <a class="navbar-brand" href="">ChangeLayout.Bla</a>*@
+    <a class="navbar-brand" href="">@Titolo</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -34,6 +34,9 @@
 </div>
 
 @code {
+    const
+    string Titolo="Casa bella";
+
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -44,7 +47,11 @@
     }
     protected override Task OnInitializedAsync()
     {
-       
         return base.OnInitializedAsync();
     }
+    //void  OnClick(string titolo)
+    //{
+    //    Titolo = titolo;
+    //}
+
 }
